@@ -1,9 +1,9 @@
 # General information
-name: "control"
-version: 0.0.0-placeholder
+name: "@simatic-ax/control"
+version: 0.0.1
 author: Siemens AG
 # Description will be displayed in the apax extension
-description: <add your description here, which will be shown in the apax extension>
+description: <This is a library for PI controller, D controller, and PID controller>
 type: lib
 #URL to the repository
 repository:

@@ -1,67 +1,49 @@
 NAMESPACE Simatic.Ax.Control
-    CLASS D_Controller IMPLEMENTS IController
-        VAR PUBLIC
-            Kp : LREAL;
-            Tn : LREAL;
-            Td : LREAL;
-            CycleTime : LREAL;
-            SetpointValue : LREAL;
-            ActualValue : LREAL;
-        END_VAR
-        METHOD PUBLIC Calculate : LREAL
+
+    CLASS D_Controller
+        EXTENDS ControllerAbstract
+
+        METHOD PUBLIC OVERRIDE Calculate : LREAL
             VAR
                 error : LREAL;
-                error_sum : LREAL;
-                error_pre : LREAL;
             END_VAR
-            error := SetpointValue - ActualValue;
+            error := SetpointValue - ActualValue^;
             error_sum := error_sum + error;
-            Calculate := Kp * Td / CycleTime * (error - error_pre);
+            Calculate := Kp * Td / TimeBase.GetTime() * (error - error_pre);
             error_pre := error;
         END_METHOD
     END_CLASS
-        
-    CLASS PI_Controller IMPLEMENTS IController
-        VAR PUBLIC
-            Kp : LREAL;
-            Tn : LREAL;
-            Td : LREAL;
-            CycleTime : LREAL;
-            SetpointValue : LREAL;
-            ActualValue : LREAL;
-        END_VAR
-        METHOD PUBLIC Calculate : LREAL
+
+    CLASS PI_Controller
+        EXTENDS ControllerAbstract
+
+        METHOD PUBLIC OVERRIDE Calculate : LREAL
             VAR
                 error : LREAL;
-                error_sum : LREAL;
-                error_pre : LREAL;
             END_VAR
-            error := SetpointValue - ActualValue;
+            error := SetpointValue - ActualValue^;
             error_sum := error_sum + error;
-            Calculate := Kp * error + Kp * CycleTime / Tn * error_sum;
+            Calculate := Kp * error + Kp * TimeBase.GetTime() / Tn * error_sum;
             error_pre := error;
         END_METHOD
     END_CLASS
-        
-    CLASS PIDController IMPLEMENTS IController 
-        VAR PUBLIC
-            Kp : LREAL;
-            Tn : LREAL;
-            Td : LREAL;
-            CycleTime : LREAL;
-            SetpointValue : LREAL;
-            ActualValue : LREAL;
-        END_VAR
-        METHOD PUBLIC Calculate : LREAL
+
+    CLASS PIDController
+        EXTENDS ControllerAbstract
+
+        METHOD PUBLIC OVERRIDE Calculate : LREAL
             VAR
                 error : LREAL;
-                error_sum : LREAL;
-                error_pre : LREAL;
             END_VAR
-            error := SetpointValue - ActualValue;
+            VAR_TEMP
+                _timebase : LREAL;
+            END_VAR
+            _timebase := TimeBase.GetTime();
+            error := SetpointValue - ActualValue^;
             error_sum := error_sum + error;
-            Calculate := Kp * error + Kp * CycleTime / Tn * error_sum + Kp * Td / CycleTime * (error - error_pre);
+            Calculate := Kp * error + Kp * _timebase / Tn * error_sum + Kp * Td / _timebase * (error - error_pre);
             error_pre := error;
         END_METHOD
-    END_CLASS    
+    END_CLASS
+
 END_NAMESPACE

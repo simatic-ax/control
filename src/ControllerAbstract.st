@@ -11,10 +11,27 @@ NAMESPACE Simatic.Ax.Control
             ActualValue : REF_TO LREAL;
         END_VAR
         VAR PROTECTED
-            error_pre : LREAL;
-            error_sum : LREAL;
+            _errorPre : LREAL;
+            _errorSum : LREAL;
+            _statusError : BOOL;
         END_VAR
-        METHOD PUBLIC ABSTRACT Calculate : LREAL
+
+        /// method which has to be called cyclically 
+        METHOD PUBLIC Calculate : LREAL
+            _statusError := NOT (THIS.Check());
+            IF (_statusError) THEN
+                RETURN;
+            ELSE
+                Calculate := THIS._calculate();
+            END_IF;
+        END_METHOD
+
+        /// Abstract method: must be implemented in the concrete controller type
+        METHOD PROTECTED ABSTRACT _calculate : LREAL
+        END_METHOD
+
+        METHOD PROTECTED Check : BOOL
+            Check := (TimeBase <> NULL) AND (ActualValue <> NULL);
         END_METHOD
     END_CLASS
 

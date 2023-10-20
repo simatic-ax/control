@@ -1,7 +1,6 @@
 NAMESPACE Simatic.Ax.Control
 
-    CLASS D_Controller
-        EXTENDS ControllerAbstract
+    CLASS D_Controller EXTENDS ControllerAbstract
 
         METHOD PROTECTED OVERRIDE _calculate : LREAL
             VAR
@@ -17,8 +16,7 @@ NAMESPACE Simatic.Ax.Control
         END_METHOD
     END_CLASS
 
-    CLASS PI_Controller
-        EXTENDS ControllerAbstract
+    CLASS PI_Controller EXTENDS ControllerAbstract
 
         METHOD PROTECTED OVERRIDE _calculate : LREAL
             VAR
@@ -34,8 +32,7 @@ NAMESPACE Simatic.Ax.Control
         END_METHOD
     END_CLASS
 
-    CLASS PIDController
-        EXTENDS ControllerAbstract
+    CLASS PIDController EXTENDS ControllerAbstract
 
         METHOD PROTECTED OVERRIDE _calculate : LREAL
             VAR
@@ -53,7 +50,7 @@ NAMESPACE Simatic.Ax.Control
             _calculate := Kp * error + Kp * _timebase / Tn * _errorSum + Kp * Td / _timebase * (error - _errorPre);
             _errorPre := error;
         END_METHOD
-    
-END_CLASS
+
+    END_CLASS
 
 END_NAMESPACE

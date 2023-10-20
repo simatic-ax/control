@@ -1,19 +1,21 @@
-# @simatic-ax.<Library>
+# @simatic-ax.control
 
 ## Description
+
+This is a library for loop control. It supports controllers like PI, D and PID controllers als well as supporting additional control elements.
 
 ## Install this package
 
 Enter:
 
 ```cli
-apax add @simatic-ax/<Library>
+apax add @simatic-ax/control
 ```
 
 ## Namespace
 
 ```iec-st
-Simatic.Ax.<Library>;
+Simatic.Ax.Control;
 ```
 
 ## Objects
